@@ -1,11 +1,21 @@
 <?php
 include '../database/connection.php';
-include '../includes/header.php';
+
 if (isset($_POST['submit'])) {
 
+    $name = $_POST['username'];
+    $password = $_POST['password'];
+
     $getadmin = ($db->query("SELECT * FROM `admin_details`"))->fetch_object();
-    if ($_POST['username'] == $getadmin->username && $_POST['password'] == $getadmin->password) {
-        header('location:admin_pannel.php');
+    if ($name == $getadmin->username && $password == $getadmin->password) {
+        header('location:../pages/admin_pannel.php');
+    }
+    $getuser = "SELECT * FROM `users` WHERE `name`='$name' AND `password`='$password'";
+    $ismatch = $db->query($getuser);
+    if ($ismatch->num_rows == 1) {
+        print_r($_SESSION);
+        exit;
+        header("location:../pages/explore.php");
     }
 }
 ?>
@@ -20,6 +30,7 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
+    <?php include '../includes/header.php'; ?>
     <div class="container">
         <div class="header">Login</div>
 

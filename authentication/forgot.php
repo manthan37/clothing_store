@@ -1,13 +1,10 @@
 <?php
-include '../database/connection.php';
-include '../includes/header.php';
-// if (isset($_POST['submit'])) {
+//include '../database/connection.php';
 
-//     $getadmin = ($db->query("SELECT * FROM `admin_details`"))->fetch_object();
-//     if ($_POST['username'] == $getadmin->username && $_POST['password'] == $getadmin->password) {
-//         header('location:admin_pannel.php');
-//     }
-// }
+if (isset($_POST['submit'])) {
+
+    header('location:login.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,10 +13,12 @@ include '../includes/header.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/style/style.css">
-    <title>Login</title>
+    <title>Forgot Password</title>
+
 </head>
 
 <body>
+    <?php include '../includes/header.php'; ?>
     <div class="container">
         <div class="header">Forgot</div>
 
@@ -32,18 +31,6 @@ include '../includes/header.php';
                 <tr>
                     <td><input type="email" name="email" id="email"></td>
                 </tr>
-                <!-- <tr>
-                    <td> <label for="password" id="password_label">Password</label></td>
-                </tr>
-                <tr>
-                    <td><input type="password" name="password" id="password"></td>
-                </tr>
-                <tr> -->
-                <!-- <td>
-                        <a href="forgot.php" class="clickhere left">Forgot password?</a>
-                    </td>
-                </tr> -->
-
 
                 <tr>
                     <td><button id="submit" type="submit" name="submit" value="submit">Sent Password</button></td>
