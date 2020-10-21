@@ -23,14 +23,27 @@
         background-color: #111;
     }
 </style>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </head>
 
 <body>
     <ul>
-        <li><a class="active" href="#home">About</a></li>
-        <li><a href="#news">Contact</a></li>
-        <li><a href="#contact">Discounts</a></li>
-        <li><a href="#about">Explore</a></li>
+        <?php if (!isset($_SESSION['islogin'])) {
+            echo "<li><a href='../authentication/login.php'>Login</a></li>";
+        }
+
+        if (isset($_SESSION['islogin'])) {
+            echo "<li><a href='../authentication/edit.php'><i class='far fa-user-circle' style='font-size:18px'></i></a></li>";
+        }
+
+        if (isset($_SESSION['islogin'])) {
+            echo '<li><a href="../authentication/logout.php"><i class="fas fa-power-off"></i></a></li>';
+        } ?>
+        <li><a href="../pages/about.php">About</a></li>
+        <li><a href="../pages/contact.php">Contact</a></li>
+        <li><a href="../pages/discount.php">Discounts</a></li>
+        <li><a href="../pages/explore.php">Explore</a></li>
+
     </ul>
 </body>
 

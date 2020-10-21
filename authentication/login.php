@@ -1,21 +1,32 @@
 <?php
 include '../database/connection.php';
-
+session_start();
 if (isset($_POST['submit'])) {
 
     $name = $_POST['username'];
     $password = $_POST['password'];
+    $getadminrow = $db->query("SELECT * FROM `admin_details` WHERE `username`='$name' AND `password`='$password'");
+    $getadmin = ($getadminrow)->fetch_object();
 
-    $getadmin = ($db->query("SELECT * FROM `admin_details`"))->fetch_object();
     if ($name == $getadmin->username && $password == $getadmin->password) {
+        $_SESSION['isadmin'] = true;
+        $_SESSION['username'] = $getadmin->username;
+        print_r($_SESSION);
         header('location:../pages/admin_pannel.php');
     }
     $getuser = "SELECT * FROM `users` WHERE `name`='$name' AND `password`='$password'";
     $ismatch = $db->query($getuser);
+    $userdata = $ismatch->fetch_object();
+
     if ($ismatch->num_rows == 1) {
-        print_r($_SESSION);
-        exit;
+
+        $_SESSION['islogin'] = true;
+        $_SESSION['username'] = $name;
+        $_SESSION['email'] = $userdata->email;
+
         header("location:../pages/explore.php");
+    } else {
+        echo "something went wrong";
     }
 }
 ?>

@@ -1,18 +1,34 @@
 <?php
 include '../database/connection.php';
 $message = '';
+session_start();
+if (!$_SESSION['islogin']) {
+    header("location:login.php");
+} else {
+    $email = $_SESSION['email'];
+
+    $record = $db->query("SELECT * FROM `users` WHERE `email` = '$email'");
+    $row = $record->fetch_object();
+}
+
 if (isset($_POST['submit'])) {
 
     $name = $_POST['username'];
-    $email = $_POST['email'];
+
     $mobile = $_POST['mobile'];
     $address = $_POST['address'];
     $password = $_POST['password'];
-    $insert = "INSERT INTO `users`(`name`,`email`,`mobile`,`address`,`password`) VALUES ('$name','$email','$mobile','$address','$password')";
+    $update = "UPDATE `users` SET 
+            `name` = '$name',
+            `mobile` = '$mobile',
+            `address` = '$address',
+            `password` = '$password'
+             WHERE `email` = '$email' ";
 
-    if ($db->query($insert)) {
-        header("location:login.php");
+    if ($db->query($update)) {
+        header("location:../pages/explore.php");
     } else {
+        echo $update;
         $message = "something went wrong";
     }
 }
@@ -24,7 +40,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/style/style.css">
-    <title>Sign Up</title>
+    <title>Edit Profile</title>
     <script>
         var pass_return = '';
 
@@ -76,7 +92,7 @@ if (isset($_POST['submit'])) {
     <div class="container" style="transform: translate(-50%,-40%); padding: 30px 50px;">
         <div class="header">Sign Up</div>
 
-        <form method="post" name="registration" autocomplete="off" onsubmit="return(validate());">
+        <form action="" method="post" name="registration" autocomplete="off" onsubmit="return(validate());">
 
             <table>
 
@@ -84,26 +100,26 @@ if (isset($_POST['submit'])) {
                     <td><label for="username" id="username_label">Username</label></td>
                 </tr>
                 <tr>
-                    <td><input type="text" name="username" id="username"></td>
+                    <td><input type="text" name="username" id="username" value="<?php echo $row->name; ?>"></td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td><label for="email" id="email_label">Email</label></td>
                 </tr>
                 <tr>
-                    <td><input type="text" autocomplete="off" name="email" id="email"></td>
-                </tr>
+                    <td><input type="text" autocomplete="off" name="email" id="email" value="<?php echo $row->email; ?>"></td>
+                </tr> -->
 
                 <tr>
                     <td><label for="mobile" id="email_label">Mobile no.</label></td>
                 </tr>
                 <tr>
-                    <td><input type="tel" name="mobile" id="mobile"></td>
+                    <td><input type="tel" name="mobile" id="mobile" value="<?php echo $row->mobile; ?>"></td>
                 </tr>
                 <tr>
                     <td><label for="address" id="address_label">Address</label></td>
                 </tr>
                 <tr>
-                    <td><input type="text" name="address" id="address"></td>
+                    <td><input type="text" name="address" id="address" value="<?php echo $row->address; ?>"></td>
                 </tr>
                 <tr>
                     <td> <label for="password" id="password_label">Password</label></td>
@@ -120,16 +136,14 @@ if (isset($_POST['submit'])) {
 
 
                 <tr>
-                    <td><button id="submit" type="submit" name="submit" value="submit">Sign Up</button></td>
+                    <td><button id="submit" type="submit" name="submit" value="submit">Update</button></td>
                 </tr>
                 <tr>
                     <td>
                         <?php echo $message; ?>
                     </td>
                 </tr>
-                <tr>
-                    <td class="center">Already Registered? <a href="login.php" class="clickhere">Login</a></td>
-                </tr>
+
             </table>
         </form>
     </div>
