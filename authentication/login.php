@@ -6,10 +6,12 @@ if (isset($_SESSION['islogin'])) {
 }
 if (isset($_POST['submit'])) {
 
-    $name = $_POST['username'];
+    $name = $_POST['email'];
     $password = $_POST['password'];
-    $getadminrow = $db->query("SELECT * FROM `admin_details` WHERE `username`='$name' AND `password`='$password'");
-    $getadmin = ($getadminrow)->fetch_object();
+    $search = "SELECT * FROM `admin_details` WHERE `username`='$name' AND `password`='$password'";
+    $getadminrow = $db->query($search);
+
+    $getadmin = $getadminrow->fetch_object();
 
     if ($name == $getadmin->username && $password == $getadmin->password) {
         $_SESSION['isadmin'] = true;
@@ -17,7 +19,7 @@ if (isset($_POST['submit'])) {
         print_r($_SESSION);
         header('location:../pages/admin_pannel.php');
     }
-    $getuser = "SELECT * FROM `users` WHERE `name`='$name' AND `password`='$password'";
+    $getuser = "SELECT * FROM `users` WHERE `email`='$name' AND `password`='$password'";
     $ismatch = $db->query($getuser);
     $userdata = $ismatch->fetch_object();
 
@@ -52,10 +54,10 @@ if (isset($_POST['submit'])) {
             <table>
 
                 <tr>
-                    <td><label for="username" id="username_label">Username</label></td>
+                    <td><label for="email" id="email_label">Email</label></td>
                 </tr>
                 <tr>
-                    <td><input type="text" name="username" id="username"></td>
+                    <td><input type="text" name="email" id="email"></td>
                 </tr>
                 <tr>
                     <td> <label for="password" id="password_label">Password</label></td>

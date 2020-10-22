@@ -106,7 +106,13 @@ if (isset($_POST['submit'])) {
 
                 <div style="align-self:center ; margin-left: 20px;">
                     <div>
-                        <img src="../assets/user_profiles/<?php echo $image; ?>" alt="went wrong" style="height: 100px; ">
+                        <img src="../assets/user_profiles/<?php
+                                                            if (strlen($image) == 10) {
+                                                                echo "default.jpg";
+                                                            } else {
+                                                                echo $image;
+                                                            }
+                                                            ?>" style="height: 100px; border-radius: 50%; ">
                     </div>
                     <div style="text-align: center;">
                         <input type="file" id="user_image" name="user_image" accept="image/x-png,image/jpg,image/jpeg" style="max-width: 90px;">

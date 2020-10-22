@@ -7,11 +7,23 @@ if (isset($_SESSION['islogin'])) {
     header("location:../pages/explore.php");
 }
 if (isset($_POST['submit'])) {
+    $filename = '';
+    if ($_FILES['user_image']['name'] != '') {
+        $tempname = $_FILES['user_image']['tmp_name'];
+        $filename = time() . $_FILES['user_image']['name'];
+        $destination = '../assets/user_profiles/' . $filename;
 
-    $tempname = $_FILES['user_image']['tmp_name'];
-    $filename = time() . $_FILES['user_image']['name'];
-    $destination = '../assets/user_profiles/' . $filename;
-    move_uploaded_file($tempname, $destination);
+        $totalBytes = 2000000;
+        if (isset($_FILES)) {
+            if ($_FILES["user_image"]["size"] <= $totalBytes) {
+                move_uploaded_file($tempname, $destination);
+                echo "File uploaded successfully!!!";
+            } else {
+                $message =  "File size must be less than 2MB!!!";
+                move_uploaded_file($tempname, $destination);
+            }
+        }
+    }
 
     $name = $_POST['username'];
     $email = $_POST['email'];
@@ -20,10 +32,18 @@ if (isset($_POST['submit'])) {
     $password = $_POST['password'];
     $insert = "INSERT INTO `users`(`name`,`email`,`mobile`,`address`,`profile_image`,`password`) VALUES ('$name','$email','$mobile','$address','$filename','$password')";
 
+
+
     if ($db->query($insert)) {
         header("location:login.php");
     } else {
-        $message = "something went wrong" . $insert;
+        if ($db->error == "Duplicate entry '$email' for key 'email'") {
+            $message =  "Email already exists.";
+        } else if ($db->error == "Duplicate entry '$mobile' for key 'mobile'") {
+            $message = "Mobile number already exists.";
+        } else {
+            $message =  "<p>Error: " . $insert . "<br>" . $db->error . "</p>";
+        }
     }
 }
 ?>
@@ -54,8 +74,7 @@ if (isset($_POST['submit'])) {
             } else if (document.getElementById('password').value == '' && document.getElementById('confirmpassword').value == '') {
                 alert('Enter Password!');
                 return false;
-            }
-            if (pass_return == false) {
+            } else if (pass_return == false) {
                 return false;
             } else {
                 return true;
@@ -80,10 +99,11 @@ if (isset($_POST['submit'])) {
         }
     </script>
 </head>
+<?php include '../includes/header.php'; ?>
 
 <body>
-    <?php include '../includes/header.php'; ?>
-    <div class="container" style="transform: translate(-50%,-40%); padding: 30px 50px;">
+
+    <div class="container" style="transform: translate(-50%,-40%);  padding: 30px 50px;">
         <div class="header">Sign Up</div>
 
         <form method="post" name="registration" enctype="multipart/form-data" autocomplete="off" onsubmit="return(validate());">
