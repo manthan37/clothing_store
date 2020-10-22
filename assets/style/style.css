@@ -5,6 +5,7 @@
     #393b44;
 } */
 body{
+    
     background-color: #f1f3f8;
     margin: 0;
     padding: 0;
@@ -12,7 +13,7 @@ body{
     font-family: 'poppins',sans-serif;
 }
 .container{
-    background-color: #393b44;
+    background-color: #303135;
     color: #f1f3f8;
     border-radius: 5px;
     padding: 30px;
@@ -33,7 +34,7 @@ input{
 }
 
 
-#username,#password,#confirmpassword,#mobile,#email,#address{
+#username,#password,#confirmpassword,#mobile,#email,#user_image,#address{
     width: 200px;
     height: 20px;
     font-size: 15px;
@@ -42,7 +43,11 @@ input{
     background-color: transparent;
     
 }
-#username:focus,#mobile:focus,#address:focus,#email:focus,#confirmpassword:focus,#password:focus{
+#user_image{
+    max-width: 200px;
+    border: none;
+}
+#username:focus,#mobile:focus,#address:focus,#email:focus,#user_image:focus,#confirmpassword:focus,#password:focus{
     outline: none;
 }
 .clickhere{

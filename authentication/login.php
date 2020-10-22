@@ -1,6 +1,9 @@
 <?php
 include '../database/connection.php';
 session_start();
+if (isset($_SESSION['islogin'])) {
+    header("location:../pages/explore.php");
+}
 if (isset($_POST['submit'])) {
 
     $name = $_POST['username'];

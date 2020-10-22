@@ -9,6 +9,7 @@ if (!$_SESSION['islogin']) {
 
     $record = $db->query("SELECT * FROM `users` WHERE `email` = '$email'");
     $row = $record->fetch_object();
+    $image = $row->profile_image;
 }
 
 if (isset($_POST['submit'])) {
@@ -18,11 +19,18 @@ if (isset($_POST['submit'])) {
     $mobile = $_POST['mobile'];
     $address = $_POST['address'];
     $password = $_POST['password'];
+
+    $tempname = $_FILES['user_image']['tmp_name'];
+    $filename = time() . $_FILES['user_image']['name'];
+    $destination = '../assets/user_profiles/' . $filename;
+    move_uploaded_file($tempname, $destination);
+
     $update = "UPDATE `users` SET 
             `name` = '$name',
             `mobile` = '$mobile',
             `address` = '$address',
-            `password` = '$password'
+            `password` = '$password',
+            `profile_image` = '$filename'
              WHERE `email` = '$email' ";
 
     if ($db->query($update)) {
@@ -41,15 +49,83 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/style/style.css">
     <title>Edit Profile</title>
+
+</head>
+
+<body>
+    <?php include '../includes/header.php'; ?>
+    <div class="container" style="transform: translate(-50%,-40%); padding: 30px 50px;">
+        <div class="header">Update your profile</div>
+
+        <form method="post" name="registration" enctype="multipart/form-data" autocomplete="off" onsubmit="return(validate(this));">
+            <div style="display: flex;">
+                <table>
+                    <tr>
+                        <td><label for="username" id="username_label">Username</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="username" id="username" value="<?php echo $row->name; ?>"></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="mobile" id="email_label">Mobile no.</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="tel" name="mobile" id="mobile" value="<?php echo $row->mobile; ?>"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="address" id="address_label">Address</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="address" id="address" value="<?php echo $row->address; ?>"></td>
+                    </tr>
+                    <tr>
+                        <td> <label for="password" id="password_label">Password</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="password" name="password" id="password" onkeyup='check();'></td>
+                    </tr>
+                    <tr>
+                        <td> <label for="confirmpassword" id="password_label">Confirm Password</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="password" name="confirmpassword" id="confirmpassword" onkeyup='check();'></td>
+                    </tr>
+
+
+                    <tr>
+                        <td><button id="submit" type="submit" name="submit" value="submit">Update</button></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?php echo $message; ?>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <div style="align-self:center ; margin-left: 20px;">
+                    <div>
+                        <img src="../assets/user_profiles/<?php echo $image; ?>" alt="went wrong" style="height: 100px; ">
+                    </div>
+                    <div style="text-align: center;">
+                        <input type="file" id="user_image" name="user_image" accept="image/x-png,image/jpg,image/jpeg" style="max-width: 90px;">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="footer"><?php include '../includes/footer.php'; ?></div>
     <script>
         var pass_return = '';
 
-        function validate() {
+        function validate(event) {
+            // return false;
+            // event.preventDefault();
             if (document.getElementById('username').value == '') {
                 alert('Please enter Your Name');
-                return false;
-            } else if (document.getElementById('email').value == '') {
-                alert('Please enter Your Email');
                 return false;
             } else if (document.getElementById('mobile').value == '') {
                 alert('Please enter Mobile no.');
@@ -60,8 +136,7 @@ if (isset($_POST['submit'])) {
             } else if (document.getElementById('password').value == '' && document.getElementById('confirmpassword').value == '') {
                 alert('Enter Password!');
                 return false;
-            }
-            if (pass_return == false) {
+            } else if (pass_return == false) {
                 return false;
             } else {
                 return true;
@@ -85,71 +160,6 @@ if (isset($_POST['submit'])) {
             }
         }
     </script>
-</head>
-
-<body>
-    <?php include '../includes/header.php'; ?>
-    <div class="container" style="transform: translate(-50%,-40%); padding: 30px 50px;">
-        <div class="header">Sign Up</div>
-
-        <form action="" method="post" name="registration" autocomplete="off" onsubmit="return(validate());">
-
-            <table>
-
-                <tr>
-                    <td><label for="username" id="username_label">Username</label></td>
-                </tr>
-                <tr>
-                    <td><input type="text" name="username" id="username" value="<?php echo $row->name; ?>"></td>
-                </tr>
-                <!-- <tr>
-                    <td><label for="email" id="email_label">Email</label></td>
-                </tr>
-                <tr>
-                    <td><input type="text" autocomplete="off" name="email" id="email" value="<?php echo $row->email; ?>"></td>
-                </tr> -->
-
-                <tr>
-                    <td><label for="mobile" id="email_label">Mobile no.</label></td>
-                </tr>
-                <tr>
-                    <td><input type="tel" name="mobile" id="mobile" value="<?php echo $row->mobile; ?>"></td>
-                </tr>
-                <tr>
-                    <td><label for="address" id="address_label">Address</label></td>
-                </tr>
-                <tr>
-                    <td><input type="text" name="address" id="address" value="<?php echo $row->address; ?>"></td>
-                </tr>
-                <tr>
-                    <td> <label for="password" id="password_label">Password</label></td>
-                </tr>
-                <tr>
-                    <td><input type="password" name="password" id="password" onkeyup='check();'></td>
-                </tr>
-                <tr>
-                    <td> <label for="confirmpassword" id="password_label">Confirm Password</label></td>
-                </tr>
-                <tr>
-                    <td><input type="password" name="confirmpassword" id="confirmpassword" onkeyup='check();'></td>
-                </tr>
-
-
-                <tr>
-                    <td><button id="submit" type="submit" name="submit" value="submit">Update</button></td>
-                </tr>
-                <tr>
-                    <td>
-                        <?php echo $message; ?>
-                    </td>
-                </tr>
-
-            </table>
-        </form>
-    </div>
-
-
-    <div class="footer"><?php include '../includes/footer.php'; ?></div>
 </body>
 
 </html>

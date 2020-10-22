@@ -1,19 +1,29 @@
 <?php
 include '../database/connection.php';
 $message = '';
+session_start();
+
+if (isset($_SESSION['islogin'])) {
+    header("location:../pages/explore.php");
+}
 if (isset($_POST['submit'])) {
+
+    $tempname = $_FILES['user_image']['tmp_name'];
+    $filename = time() . $_FILES['user_image']['name'];
+    $destination = '../assets/user_profiles/' . $filename;
+    move_uploaded_file($tempname, $destination);
 
     $name = $_POST['username'];
     $email = $_POST['email'];
     $mobile = $_POST['mobile'];
     $address = $_POST['address'];
     $password = $_POST['password'];
-    $insert = "INSERT INTO `users`(`name`,`email`,`mobile`,`address`,`password`) VALUES ('$name','$email','$mobile','$address','$password')";
+    $insert = "INSERT INTO `users`(`name`,`email`,`mobile`,`address`,`profile_image`,`password`) VALUES ('$name','$email','$mobile','$address','$filename','$password')";
 
     if ($db->query($insert)) {
         header("location:login.php");
     } else {
-        $message = "something went wrong";
+        $message = "something went wrong" . $insert;
     }
 }
 ?>
@@ -76,7 +86,7 @@ if (isset($_POST['submit'])) {
     <div class="container" style="transform: translate(-50%,-40%); padding: 30px 50px;">
         <div class="header">Sign Up</div>
 
-        <form method="post" name="registration" autocomplete="off" onsubmit="return(validate());">
+        <form method="post" name="registration" enctype="multipart/form-data" autocomplete="off" onsubmit="return(validate());">
 
             <table>
 
@@ -104,6 +114,12 @@ if (isset($_POST['submit'])) {
                 </tr>
                 <tr>
                     <td><input type="text" name="address" id="address"></td>
+                </tr>
+                <tr>
+                    <td><label for="user_image" id="user_image_label">Choose Profile Image</label></td>
+                </tr>
+                <tr>
+                    <td><input type="file" id="user_image" name="user_image" accept="image/x-png,image/jpg,image/jpeg"></td>
                 </tr>
                 <tr>
                     <td> <label for="password" id="password_label">Password</label></td>
