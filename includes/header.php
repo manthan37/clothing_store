@@ -11,6 +11,8 @@
         float: right;
     }
 
+
+
     li a {
         display: block;
         color: white;
@@ -21,6 +23,14 @@
 
     li a:hover {
         background-color: #111;
+    }
+
+    .left {
+        float: left;
+    }
+
+    .left:hover {
+        background-color: rgb(57, 59, 79);
     }
 </style>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
@@ -41,6 +51,8 @@
         <li><a href="../pages/contact.php">Contact</a></li>
         <li><a href="../pages/discount.php">Discounts</a></li>
         <li><a href="../pages/explore.php">Explore</a></li>
-
+        <?php if (isset($_SESSION['islogin'])) {
+            echo "<li class='left'><a>Hello, " . $_SESSION['username'] . "</a></li>";
+        } ?>
     </ul>
 </body>

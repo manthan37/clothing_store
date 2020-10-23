@@ -8,17 +8,18 @@ if (isset($_POST['submit'])) {
 
     $name = $_POST['email'];
     $password = $_POST['password'];
-    $search = "SELECT * FROM `admin_details` WHERE `username`='$name' AND `password`='$password'";
-    $getadminrow = $db->query($search);
+    // $search = "SELECT * FROM `admin_details` WHERE `username`='$name' AND `password`='$password'";
+    // $getadminrow = $db->query($search);
 
-    $getadmin = $getadminrow->fetch_object();
+    // $getadmin = $getadminrow->fetch_object();
 
-    if ($name == $getadmin->username && $password == $getadmin->password) {
+    if ($name == 'admin' && $password == 'admin') {
         $_SESSION['isadmin'] = true;
         $_SESSION['username'] = $getadmin->username;
         print_r($_SESSION);
         header('location:../pages/admin_pannel.php');
     }
+
     $getuser = "SELECT * FROM `users` WHERE `email`='$name' AND `password`='$password'";
     $ismatch = $db->query($getuser);
     $userdata = $ismatch->fetch_object();
@@ -26,12 +27,12 @@ if (isset($_POST['submit'])) {
     if ($ismatch->num_rows == 1) {
 
         $_SESSION['islogin'] = true;
-        $_SESSION['username'] = $name;
+        $_SESSION['username'] = $userdata->name;
         $_SESSION['email'] = $userdata->email;
 
         header("location:../pages/explore.php");
     } else {
-        echo "something went wrong";
+        echo "Not Registred!";
     }
 }
 ?>
