@@ -1,7 +1,14 @@
 <?php
 include '../database/connection.php';
 session_start();
+if (isset($_SESSION['islogin']) && isset($_SESSION['isseller'])) {
+    header("location:product_upload.php");
+}
+if (isset($_SESSION['islogin'])) {
+    header("location:../pages/explore.php");
+}
 $message = '';
+
 if (isset($_POST['submit'])) {
     $name = $_POST['username'];
     $email = $_POST['email'];

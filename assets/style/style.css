@@ -34,7 +34,7 @@ input{
 }
 
 
-#username,#password,#confirmpassword,#mobile,#email,#user_image,#address{
+#username,#password,#confirmpassword,#mobile,#email,#user_image,#address,#product_name,#description,#price,#review,#size{
     width: 200px;
     height: 20px;
     font-size: 15px;
@@ -47,7 +47,7 @@ input{
     max-width: 200px;
     border: none;
 }
-#username:focus,#mobile:focus,#address:focus,#email:focus,#user_image:focus,#confirmpassword:focus,#password:focus{
+#username:focus,#mobile:focus,#address:focus,#email:focus,#user_image:focus,#confirmpassword:focus,#password:focus,#product_name:focus,#category:focus,#description:focus,#price:focus,#review:focus,#size:focus,.upload:focus{
     outline: none;
 }
 .clickhere{
@@ -88,4 +88,7 @@ input{
     color: darkgray;
     font-size: 10px;
     text-align: center;
+}
+.upload{
+    box-shadow:3px 6px #8bca61;
 }
