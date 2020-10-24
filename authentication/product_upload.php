@@ -3,7 +3,7 @@ include '../database/connection.php';
 $message = '';
 session_start();
 
-print_r($_SESSION);
+//print_r($_SESSION);
 if (!isset($_SESSION['isseller'])) {
     header("location:../pages/explore.php");
 }
@@ -40,16 +40,12 @@ if (isset($_POST['submit'])) {
 
 
 
-    // if ($db->query($insert)) {
-    //     echo "success";
-    //     // header("location:login.php");
-    // } else {
-    //     if ($db->error == "Duplicate entry '$email' for key 'email'") {
-    //         $message =  "Email already exists.";
-    //     } else {
-    //         $message =  "<p>Error: " . $insert . "<br>" . $db->error . "</p>";
-    //     }
-    // }
+    if ($db->query($insert)) {
+
+        header("location:product_list.php");
+    } else {
+        $message =  "<p>Error: " . $db->error . "</p>";
+    }
 }
 ?>
 <!DOCTYPE html>

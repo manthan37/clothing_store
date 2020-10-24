@@ -92,3 +92,14 @@ input{
 .upload{
     box-shadow:3px 6px #8bca61;
 }
+.tableborder{
+    border:2px solid white;
+    padding: 5px;
+}
+.zoom {
+    transition: transform .2s;
+  }
+  .zoom:hover {
+    
+    transform: scale(1.5); 
+  }

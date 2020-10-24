@@ -79,6 +79,9 @@ if (isset($_POST['submit'])) {
                 <tr>
                     <td class="center">Not Registered? <a href="registration.php" class="clickhere">Sign up</a></td>
                 </tr>
+                <tr>
+                    <td class="center">As seller? <a href="login_seller.php" class="clickhere">Seller</a></td>
+                </tr>
             </table>
         </form>
     </div>

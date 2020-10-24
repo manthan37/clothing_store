@@ -39,8 +39,12 @@
 <body>
     <ul>
         <?php
-
-        if (isset($_SESSION['islogin'])) {
+        if (!isset($_SESSION['islogin'])) {
+            echo "<li><a href='../authentication/login.php'>Login</a></li>";
+        }
+        if (isset($_SESSION['islogin']) & isset($_SESSION['isseller'])) {
+            echo "<li><a href='../authentication/product_list.php'><i class='far fa-user-circle' style='font-size:18px'></i></a></li>";
+        } elseif (isset($_SESSION['islogin'])) {
             echo "<li><a href='../authentication/edit.php'><i class='far fa-user-circle' style='font-size:18px'></i></a></li>";
         }
 

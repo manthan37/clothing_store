@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
     if ($email == 'admin' && $password == 'admin') {
         $_SESSION['isadmin'] = true;
         $_SESSION['username'] = $getadmin->username;
-        print_r($_SESSION);
+        //print_r($_SESSION);
         header('location:../pages/admin_pannel.php');
     }
 
@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['email'] = $userdata->email;
         $_SESSION['isseller'] = true;
 
-        echo 'header("location:product_upload.php")';
+        header("location:product_upload.php");
     } else {
         $message =  "Not Registred!";
     }
