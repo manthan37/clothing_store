@@ -9,6 +9,8 @@ if (!isset($_SESSION['islogin'])) {
 $ids = $_SESSION['cart'];
 
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,11 +40,16 @@ $ids = $_SESSION['cart'];
         <?php $counter = 1;
 
         foreach ($ids as $key => $value) {
+            if ($key == 0) {
+                continue;
+            }
             $result = $db->query("SELECT * FROM `products` WHERE `id` = '$value'");
             $row = $result->fetch_object();
         ?>
             <tr class="tableborder">
-                <td class="tableborder"><?php echo $counter;
+                <td class="tableborder"><?php
+                                        // error_reporting(0);
+                                        echo $counter;
                                         $counter += 1; ?></td>
                 <td class="tableborder"><?php echo $row->name ?></td>
                 <td class="tableborder"><?php echo $row->gender ?></td>
@@ -59,7 +66,10 @@ $ids = $_SESSION['cart'];
 
 
     </table>
+
     <div style="background-color: #8d93ab; width: 130px; text-align: center; "><a href="checkout.php" style="color: black;" onclick="return confirm('Are you sure?');">Checkout</a></div>
+
+
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../database/connection.php';
 if (!isset($_SESSION['islogin'])) {
     header("location:login.php");
 } else if (isset($_SESSION['islogin']) && isset($_SESSION['isseller'])) {
@@ -7,7 +8,9 @@ if (!isset($_SESSION['islogin'])) {
 } else if (!isset($_SESSION['cart'])) {
     header("location:../pages/explore.php");
 }
-print_r($_SESSION);
+if (sizeof($_SESSION['cart']) == 1) {
+    header("location:../pages/explore.php");
+}
 $ids = $_SESSION['cart'];
 foreach ($ids as $key => $value) {
     $result = $db->query("SELECT * FROM `products` WHERE `id` = '$value'");
@@ -21,10 +24,11 @@ foreach ($ids as $key => $value) {
     $order = "INSERT INTO `orders` (`product_id`,`seller_name`,`customer_email`,`customer_name`,`total`,`status`) VALUES ('$product_id','$seller_name','$customer_email','$customer_name','$total','ordered')";
     if ($db->query($order)) {
 
-        header("location:explore.php");
+        header("location:../pages/explore.php");
     } else {
         echo $db->error;
         echo $order;
     }
 }
 unset($_SESSION['cart']);
+$_SESSION['cart'] = array(0);
