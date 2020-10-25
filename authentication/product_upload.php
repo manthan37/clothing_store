@@ -83,10 +83,11 @@ if (isset($_POST['submit'])) {
         }
     </script>
 </head>
-<?php include '../includes/header.php'; ?>
+
 
 <body>
-
+    <?php include '../includes/header.php'; ?>
+    <div style="background-color: #8d93ab; width: 130px; text-align: center; "><a href="product_list.php" style="color: black;">Your products</a></div>
     <div class="container" style="transform: translate(-50%,-40%);  padding: 30px 50px;">
         <div class="header">Upload your product</div>
 

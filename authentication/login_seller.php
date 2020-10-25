@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['email'] = $userdata->email;
         $_SESSION['isseller'] = true;
 
-        header("location:product_upload.php");
+        header("location:product_list.php");
     } else {
         $message =  "Not Registred!";
     }

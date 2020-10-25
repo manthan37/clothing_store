@@ -1,6 +1,34 @@
 <?php session_start();
 include '../database/connection.php';
-$result = $db->query("SELECT * FROM `products`");
+$append1 = 1;
+$append2 = 1;
+$append3 = "";
+
+if (isset($_POST['apply'])) {
+
+    if ($_POST['gender'] != 'all') {
+        $append1 = "`gender`='" . $_POST['gender'] . "'";
+    } else {
+        $append1 = 1;
+    }
+    if ($_POST['category'] != 'all') {
+        $append2 = "`category`='" . $_POST['category'] . "'";
+    } else {
+        $append2 = 1;
+    }
+    if ($_POST['by'] == 'newest') {
+        $append3 = "ORDER BY `id` DESC";
+    } else if ($_POST['by'] == 'popular') {
+        $append3 = "ORDER BY `product_review` DESC";
+    } else if ($_POST['by'] == 'price_asc') {
+        $append3 = "ORDER BY `price` ASC";
+    } else if ($_POST['by'] == 'price_desc') {
+        $append3 = "ORDER BY `price` DESC";
+    }
+}
+$search = "SELECT * FROM `products` WHERE $append1 AND $append2 $append3";
+
+$result = $db->query($search);
 
 ?>
 <!DOCTYPE html>
@@ -18,7 +46,7 @@ $result = $db->query("SELECT * FROM `products`");
     <?php include 'mainbanner.php'; ?>
 
 
-    <form action="">
+    <form action="" method="post">
         <div class="filter">
             <div class="inline_div">Shope by </div>
             <div class="inline_div">
@@ -32,21 +60,28 @@ $result = $db->query("SELECT * FROM `products`");
                 Category
                 <select name="category">
                     <option value="all">All</option>
-                    <option value="topwear">Topwear</option>
-                    <option value="bottomwear">Bottomwear</option>
+                    <option value="top wear">Topwear</option>
+                    <option value="bottom wear">Bottomwear</option>
                     <option value="watches">Watches</option>
                     <option value="shoes">Shoes</option>
                     <option value="perfumes">Perfumes</option>
                     <option value="other">Other</option>
                 </select></div>
+            <div class="inline_div">
+                By
+                <select name="by">
+                    <option value="">None</option>
+                    <option value="newest">Newest</option>
+                    <option value="popular">Popular</option>
+                    <option value="price_asc">Price: low to high</option>
+                    <option value="price_desc">Price: high to low</option>
 
+                </select></div>
+            <div>
+                <input type="submit" value="apply" name="apply" style="color: black;">
+            </div>
         </div>
     </form>
-
-
-
-
-
 
     <div class="products" style="margin: 20px; display: flex;   flex-wrap: wrap; justify-content: space-evenly;">
         <?php while ($product = $result->fetch_object()) { ?>

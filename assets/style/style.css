@@ -126,7 +126,7 @@ input{
     transition: transform .2s;
 }
 .product_detail:hover{
-    transform: translateY(-10px);
+    transform: translateY(-5px);
   }
 .product_name{
     color: grey;
@@ -176,7 +176,7 @@ input{
     
     background-color: #393b44;
     color: #f1f3f8;
-    padding: 7px 15px;
+    padding: 7px 160px;
     display: flex;
     justify-content: space-between;
 }
