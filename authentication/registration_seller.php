@@ -92,11 +92,11 @@ if (isset($_POST['submit'])) {
 <body>
 
     <div class="container" style="transform: translate(-50%,-40%);  padding: 30px 50px;">
-        <div class="header">Sign Up</div>
+        <div class="header">Sign Up as seller</div>
 
         <form method="post" name="registration" autocomplete="off" onsubmit="return(validate());">
 
-            <table>
+            <table style="margin:auto;">
 
                 <tr>
                     <td><label for="username" id="username_label">Username</label></td>

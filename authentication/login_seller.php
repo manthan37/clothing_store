@@ -81,7 +81,10 @@ if (isset($_POST['submit'])) {
                     <td class="center" style="color: #f56942; font-size: larger;"><?php echo $message; ?></td>
                 </tr>
                 <tr>
-                    <td class="center">Not Registered? <a href="registration.php" class="clickhere">Sign up</a></td>
+                    <td class="center">Not Registered? <a href="registration_seller.php" class="clickhere">Sign up as seller</a></td>
+                </tr>
+                <tr>
+                    <td class="center">As user? <a href="login.php" class="clickhere">User</a></td>
                 </tr>
             </table>
         </form>

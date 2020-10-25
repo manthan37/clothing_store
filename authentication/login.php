@@ -1,6 +1,7 @@
 <?php
 include '../database/connection.php';
 session_start();
+$message = "";
 if (isset($_SESSION['islogin'])) {
     header("location:../pages/explore.php");
 }
@@ -32,7 +33,7 @@ if (isset($_POST['submit'])) {
 
         header("location:../pages/explore.php");
     } else {
-        echo "Not Registred!";
+        $message = "Not Registred!";
     }
 }
 ?>
@@ -72,7 +73,9 @@ if (isset($_POST['submit'])) {
                     </td>
                 </tr>
 
-
+                <tr>
+                    <td class="center" style="color: #f56942; font-size: larger;"><?php echo $message; ?></td>
+                </tr>
                 <tr>
                     <td><button id="submit" type="submit" name="submit" value="submit">Login</button></td>
                 </tr>
