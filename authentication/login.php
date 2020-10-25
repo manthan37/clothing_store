@@ -30,6 +30,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['islogin'] = true;
         $_SESSION['username'] = $userdata->name;
         $_SESSION['email'] = $userdata->email;
+        $_SESSION['cart'] = array(0);
 
         header("location:../pages/explore.php");
     } else {

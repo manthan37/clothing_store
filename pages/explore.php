@@ -40,9 +40,10 @@ $result = $db->query($search);
     <title>Explore</title>
     <link rel="stylesheet" href="../assets/style/style.css">
 </head>
+<?php include '../includes/header.php'; ?>
 
 <body>
-    <?php include '../includes/header.php'; ?>
+
     <?php include 'mainbanner.php'; ?>
 
 
@@ -106,9 +107,11 @@ $result = $db->query($search);
                                                         } ?>"><?php echo $product->product_review . " / 5 ☆"; ?></span><br>
                     <span class="product_size"><?php echo "size: " . $product->size; ?></span><br />
                     <div class="buttons">
-                        <a href="<?php if (!isset($_SESSION['islogin'])) {
-                                        echo "../authentication/login.php";
-                                    } ?>" class="btn_add_to_cart" style="color: whitesmoke;">Add to cart</a>
+                        <?php if (in_array($product->id, $_SESSION['cart'])) {
+                            echo '<a href="../authentication/deletetocart.php?cart_delete=' . $product->id . '" class="btn_add_to_cart" style="color: whitesmoke; background-color:green;">Added</a>';
+                        } else if (isset($_SESSION['islogin']) && !isset($_SESSION['isseller'])) {
+                            echo '<a href="../authentication/addtocart.php?cart_add=' . $product->id . '" class="btn_add_to_cart" style="color: whitesmoke;">Add to cart</a>';
+                        } ?>
                         <a href="product_details.php?id=<?php echo $product->id; ?>" class="btn_view_detail" style="color: whitesmoke;">View full detail</a>
                     </div>
                 </div>

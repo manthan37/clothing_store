@@ -64,9 +64,9 @@ if (isset($_POST['buy'])) {
                                                     } ?>"><?php echo $product->product_review . " / 5 ☆"; ?></span><br>
                 <span class="product_size"><?php echo "size: " . $product->size; ?></span><br />
                 <div class="buttons">
-                    <a href="<?php if (!isset($_SESSION['islogin'])) {
-                                    echo "../authentication/login.php";
-                                } ?>" class="btn_add_to_cart" style="color: whitesmoke;">Add to cart</a>
+                    <?php if (isset($_SESSION['islogin']) && !isset($_SESSION['isseller'])) {
+                        echo '<a href="../authentication/addtocart.php" class="btn_add_to_cart" style="color: whitesmoke;">Add to cart</a>';
+                    } ?>
                     <button name="buy" value="buy" class="btn_add_to_cart" style="color: whitesmoke; border: none; font-size: 16px;">Buy</button>
                 </div>
             </div>
