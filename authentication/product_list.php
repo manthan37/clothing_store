@@ -49,6 +49,7 @@ if ($result->num_rows == 0) {
                 <th class="tableborder">Product review</th>
                 <th class="tableborder">Size</th>
                 <th class="tableborder">Image</th>
+                <th class="tableborder">Edit</th>
             </tr>
             <?php $counter = 1;
             while ($row = $result->fetch_object()) { ?>
@@ -64,6 +65,7 @@ if ($result->num_rows == 0) {
                     <td class="tableborder"><?php echo $row->product_review ?></td>
                     <td class="tableborder"><?php echo $row->size ?></td>
                     <td class="tableborder" style="text-align: center;"><img class="zoom" src="../assets/product_photo/<?php echo $row->image; ?>" alt="" height="80px"></td>
+                    <td><a href="product_edit.php?id=<?php echo $row->id; ?>">edit</a></td>
                 </tr>
             <?php } ?>
 

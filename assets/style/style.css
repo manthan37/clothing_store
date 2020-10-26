@@ -117,17 +117,23 @@ input{
     box-shadow: 0 3px 16px 0 grey;
     border-radius: 5px; 
 }
+.product_container:hover .product_detail{
+    transform: translateY(-10px);
+
+}
+.product_container:hover .product_img img{
+    border-radius: 5px;
+}
 .product_container{
     font-size: 12px;
     
 }
 .product_detail{
+    
     margin: 5px;
     transition: transform .2s;
 }
-.product_detail:hover{
-    transform: translateY(-5px);
-  }
+
 .product_name{
     color: grey;
 }

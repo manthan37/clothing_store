@@ -3,6 +3,9 @@ include '../database/connection.php';
 $append1 = 1;
 $append2 = 1;
 $append3 = "";
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = array(0);
+}
 
 if (isset($_POST['apply'])) {
 
@@ -87,7 +90,7 @@ $result = $db->query($search);
     <div class="products" style="margin: 20px; display: flex;   flex-wrap: wrap; justify-content: space-evenly;">
         <?php while ($product = $result->fetch_object()) { ?>
             <div class="product_container zoom1" style="width: 20vw; margin-bottom: 10px; ">
-                <div><img src="../assets/product_photo/<?php echo $product->image; ?>" width="258px" height="255px" alt=""></div>
+                <div class="product_img"><img src="../assets/product_photo/<?php echo $product->image; ?>" width="258px" height="255px" alt=""></div>
                 <div class="product_detail">
                     <span class="product_name"><?php echo $product->name . " for " . $product->gender; ?></span><br />
                     <span class="product_description"><?php echo $product->description; ?></span><br />
@@ -109,7 +112,7 @@ $result = $db->query($search);
                     <div class="buttons">
                         <?php if (in_array($product->id, $_SESSION['cart'])) {
                             echo '<a href="../authentication/deletetocart.php?cart_delete=' . $product->id . '" class="btn_add_to_cart" style="color: whitesmoke; background-color:green;">Added</a>';
-                        } else if (isset($_SESSION['islogin']) && !isset($_SESSION['isseller'])) {
+                        } else if (isset($_SESSION['islogin']) && !isset($_SESSION['isseller']) && $product->is_available == 'yes') {
                             echo '<a href="../authentication/addtocart.php?cart_add=' . $product->id . '" class="btn_add_to_cart" style="color: whitesmoke;">Add to cart</a>';
                         } ?>
                         <a href="product_details.php?id=<?php echo $product->id; ?>" class="btn_view_detail" style="color: whitesmoke;">View full detail</a>
