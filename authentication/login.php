@@ -20,7 +20,6 @@ if (isset($_POST['submit'])) {
         print_r($_SESSION);
         header('location:../pages/admin_pannel.php');
     }
-
     $getuser = "SELECT * FROM `users` WHERE `email`='$name' AND `password`='$password'";
     $ismatch = $db->query($getuser);
     $userdata = $ismatch->fetch_object();
